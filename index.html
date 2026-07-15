@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GarageX — Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">🚗</div>
+          <div class="brand-name">GarageX</div>
+        </div>
+        <nav class="sidebar-nav" aria-label="Main">
+          <a class="nav-link active" href="index.html"><span class="nav-icon">▦</span> Dashboard</a>
+          <a class="nav-link" href="index.html#garage"><span class="nav-icon">🏠</span> Garage</a>
+          <a class="nav-link" href="fueltracker.html"><span class="nav-icon">⛽</span> Fuel Tracker</a>
+          <a class="nav-link" href="servicetimeline.html"><span class="nav-icon">🔧</span> Service History</a>
+          <a class="nav-link" href="index.html#expenses"><span class="nav-icon">💰</span> Expenses</a>
+          <a class="nav-link" href="index.html#tyres"><span class="nav-icon">◎</span> Tyres</a>
+          <a class="nav-link" href="index.html#documents"><span class="nav-icon">📄</span> Documents</a>
+          <a class="nav-link" href="index.html#reminders"><span class="nav-icon">🔔</span> Reminders</a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="premium-card">
+            <h4>Go Premium</h4>
+            <p>Unlock advanced analytics & cloud backup</p>
+            <button class="btn block" type="button">Upgrade Now</button>
+          </div>
+          <div class="user-card">
+            <div class="user-avatar">AK</div>
+            <div class="user-info">
+              <strong>Apsar Khan</strong>
+              <span>apsar@email.com</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-area">
+        <header class="topbar">
+          <div class="greeting">
+            <h1 id="greetingText">Good evening, Apsar 👋</h1>
+            <p>Here's what's happening with your vehicle today.</p>
+          </div>
+          <div class="topbar-center">
+            <div class="search-box">
+              <span>🔍</span>
+              <input type="search" placeholder="Search anything..." aria-label="Search" />
+              <span class="search-kbd">⌘K</span>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn" type="button" aria-label="Notifications">
+              🔔
+              <span class="badge" id="notifBadge">0</span>
+            </button>
+            <button class="icon-btn" type="button" aria-label="Theme">🌙</button>
+          </div>
+        </header>
+
+        <div class="content-wrapper">
+          <main class="dashboard-main">
+            <div class="stat-row">
+              <div class="stat-card">
+                <div class="label">Fuel Left</div>
+                <div class="value" id="metricFuelLeft">—</div>
+                <div class="hint" id="subFuelLeft">~0 km left</div>
+                <div class="progress"><span id="barFuelLeft" class="accent" style="width:0%"></span></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Upcoming Service</div>
+                <div class="value" id="metricService">—</div>
+                <div class="hint" id="subService">No service scheduled</div>
+                <div class="progress"><span id="barService" class="warning" style="width:0%"></span></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Insurance</div>
+                <div class="value" id="metricInsurance">—</div>
+                <div class="hint" id="subInsurance">Set renewal date</div>
+                <div class="progress"><span id="barInsurance" class="accent" style="width:0%"></span></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Total Expenses</div>
+                <div class="value" id="metricExpenses">₹0</div>
+                <div class="hint" id="subExpenses">This month</div>
+                <div class="sparkline" id="expenseSparkline"></div>
+              </div>
+            </div>
+
+            <div class="dash-grid-2">
+              <section class="card vehicle-hero" id="garage">
+                <div class="card-header">
+                  <h2>My Vehicle</h2>
+                  <a href="#garage">View all</a>
+                </div>
+                <div id="vehiclePhoto" class="vehicle-photo">
+                  <div>
+                    <div class="vehicle-name" id="vehicleNameDisplay">Hyundai Creta</div>
+                    <div class="vehicle-plate" id="vehiclePlateDisplay">MH 12 AB 1234</div>
+                  </div>
+                </div>
+                <span class="badge-active" id="vehicleStatusBadge">Active</span>
+              </section>
+
+              <section class="card" id="expenses">
+                <div class="card-header">
+                  <h2>Monthly Overview</h2>
+                  <button type="button" class="link" id="monthlyFilter">This month ▾</button>
+                </div>
+                <div class="line-chart">
+                  <svg id="monthlyOverview" width="100%" height="140" viewBox="0 0 360 140" aria-label="Monthly overview"></svg>
+                </div>
+                <div class="chart-legend">
+                  <div class="legend-item"><span class="swatch" style="background:#c41e3a"></span><span id="legendFuel">Fuel ₹0</span></div>
+                  <div class="legend-item"><span class="swatch" style="background:#22c55e"></span><span id="legendService">Service ₹0</span></div>
+                  <div class="legend-item"><span class="swatch" style="background:#f59e0b"></span><span id="legendInsurance">Other ₹0</span></div>
+                </div>
+              </section>
+            </div>
+
+            <div class="dash-grid-2">
+              <section class="card">
+                <div class="card-header">
+                  <h2>Recent Activity</h2>
+                  <a href="fueltracker.html">View all</a>
+                </div>
+                <div id="recentActivity" class="activity-list"></div>
+              </section>
+
+              <section class="card">
+                <div class="card-header">
+                  <h2>Fuel Efficiency</h2>
+                  <button type="button" class="link">This month ▾</button>
+                </div>
+                <div class="efficiency-head">
+                  <div>
+                    <div class="efficiency-value" id="avgMileage">—</div>
+                    <div class="subtext">Average Mileage</div>
+                  </div>
+                  <div class="efficiency-change" id="mileageChange">—</div>
+                </div>
+                <div id="efficiencyBars" class="bar-chart"></div>
+              </section>
+            </div>
+
+            <section class="section card" id="documents">
+              <h2>Document Vault</h2>
+              <p class="subtext">Upload RC, insurance, PUC, or license files.</p>
+              <div id="docGrid" class="doc-grid"></div>
+            </section>
+
+            <section class="section card" id="garage-form">
+              <h2>Vehicle Profile</h2>
+              <p class="subtext">Update your vehicle details and insurance info.</p>
+              <form id="vehicleForm" style="margin-top:14px;">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="vehicleName">Vehicle name</label>
+                    <input id="vehicleName" name="name" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="vehiclePlate">Plate number</label>
+                    <input id="vehiclePlate" name="plate" type="text" placeholder="MH 12 AB 1234" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleMileage">Mileage (km)</label>
+                    <input id="vehicleMileage" name="mileage" type="number" min="0" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleFuelType">Fuel type</label>
+                    <input id="vehicleFuelType" name="fuelType" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleVin">VIN</label>
+                    <input id="vehicleVin" name="vin" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleEngine">Engine</label>
+                    <input id="vehicleEngine" name="engine" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleTyres">Tyres</label>
+                    <input id="vehicleTyres" name="tyres" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="vehicleInsuranceStatus">Insurance status</label>
+                    <select id="vehicleInsuranceStatus" name="insuranceStatus">
+                      <option value="Active">Active</option>
+                      <option value="Expired">Expired</option>
+                      <option value="Pending">Pending</option>
+                    </select>
+                  </div>
+                  <div class="field full">
+                    <label for="vehicleInsuranceRenewal">Insurance renewal</label>
+                    <input id="vehicleInsuranceRenewal" name="insuranceRenewal" type="date" />
+                  </div>
+                  <div class="field full">
+                    <label>Vehicle photo</label>
+                    <input id="vehicleImageInput" type="file" accept="image/*" />
+                  </div>
+                </div>
+                <div class="submit-row">
+                  <button class="btn" type="submit">Save Profile</button>
+                </div>
+                <div id="vehicleToast" class="toast" role="status"></div>
+              </form>
+            </section>
+
+            <section class="section card" id="reminders">
+              <h2>Manage Reminders</h2>
+              <div id="reminderGrid" class="reminder-grid"></div>
+              <form id="reminderForm" style="margin-top:14px;">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="reminderTitle">Reminder</label>
+                    <input id="reminderTitle" name="title" type="text" placeholder="e.g. PUC expires" required />
+                  </div>
+                  <div class="field">
+                    <label for="reminderDue">Due date</label>
+                    <input id="reminderDue" name="dueDate" type="date" required />
+                  </div>
+                </div>
+                <div class="submit-row">
+                  <button class="btn" type="submit">Add Reminder</button>
+                </div>
+                <div id="reminderToast" class="toast" role="status"></div>
+              </form>
+            </section>
+          </main>
+
+          <aside class="right-panel">
+            <section class="card">
+              <div class="card-header">
+                <h2>Reminders</h2>
+                <a href="#reminders">View all</a>
+              </div>
+              <div id="sidebarReminders" class="reminder-list"></div>
+            </section>
+
+            <section class="card" id="tyres">
+              <div class="card-header">
+                <h2>Vehicle Status</h2>
+              </div>
+              <div class="tyre-diagram">
+                <div class="car-outline"></div>
+                <div class="tyre-node fl"><strong id="tyreFL">32</strong><span>Good</span></div>
+                <div class="tyre-node fr"><strong id="tyreFR">32</strong><span>Good</span></div>
+                <div class="tyre-node rl"><strong id="tyreRL">33</strong><span>Good</span></div>
+                <div class="tyre-node rr"><strong id="tyreRR">33</strong><span>Good</span></div>
+              </div>
+              <button class="btn block secondary" type="button">Check Tyre Pressure</button>
+            </section>
+
+            <section class="card">
+              <div class="card-header">
+                <h2>Quick Actions</h2>
+              </div>
+              <div class="quick-grid">
+                <a class="quick-btn" href="fueltracker.html"><span class="q-icon">⛽</span>Add Fuel Entry</a>
+                <button class="quick-btn" type="button" data-scroll="expenses"><span class="q-icon">💰</span>Add Expense</button>
+                <a class="quick-btn" href="servicetimeline.html"><span class="q-icon">🔧</span>Add Service</a>
+                <button class="quick-btn" type="button" data-scroll="documents"><span class="q-icon">📄</span>Upload Document</button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div id="fabMenu" class="fab-menu">
+      <a href="fueltracker.html">⛽ Add Fuel Entry</a>
+      <a href="servicetimeline.html">🔧 Add Service</a>
+      <button type="button" data-scroll="documents">📄 Upload Document</button>
+      <button type="button" data-scroll="reminders">🔔 Add Reminder</button>
+    </div>
+    <button class="fab" id="fabBtn" type="button" aria-label="Quick add">+</button>
+
+    <div id="previewModal" class="modal-backdrop" role="dialog" aria-modal="true">
+      <div class="modal">
+        <h3 id="previewTitle">Preview</h3>
+        <div id="previewBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close-modal>Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
